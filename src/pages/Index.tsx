@@ -5,10 +5,10 @@ import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
 import { Plus, Skull, LogOut, UserX, Sun, Moon } from 'lucide-react';
 import { useTheme } from '@/hooks/useTheme';
-import GroupList from '@/components/GroupList';
-import GroupDetail from '@/components/GroupDetail';
-import CreateGroupForm from '@/components/CreateGroupForm';
-import EditGroupForm from '@/components/EditGroupForm';
+import GroupList from '@/components/groups/GroupList';
+import GroupDetail from '@/components/groups/GroupDetail';
+import CreateGroupForm from '@/components/groups/CreateGroupForm';
+import EditGroupForm from '@/components/groups/EditGroupForm';
 import { toast } from 'sonner';
 
 const Index = () => {
@@ -62,10 +62,7 @@ const Index = () => {
                 if (!confirmed || !user) return;
 
                 try {
-                  // 1) tenta excluir a conta de autenticação primeiro
                   await deleteAccount();
-
-                  // 2) só depois exclui dados de domínio (grupos/profiles)
                   await deleteUserData();
 
                   toast.success('Conta excluída com sucesso!');
@@ -109,7 +106,7 @@ const Index = () => {
             onUpdate={async (updates) => {
               await updateGroup(editingGroup.id, updates);
               setEditingGroupId(null);
-              setSelectedGroupId(editingGroup.id); // Stay on the group
+              setSelectedGroupId(editingGroup.id);
             }}
             onRemoveMember={async (memberId) => {
               await removeMember(editingGroup.id, memberId);
